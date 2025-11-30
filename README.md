@@ -49,5 +49,5 @@ Siga estes passos para configurar e executar o projeto.
 ### **1. Clonar o Repositório**
 
 ```bash
-git clone https://github.com/mrjefersoniure/Plaaforma-leitura-compartilhada.git
+git clone https://github.com/mrjefersoniure/Leitura-compartilhada.git
 cd Plaaforma-leitura-compartilhada

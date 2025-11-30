@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banco de Livros Digitais</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body class="bg-light">
+
+    <nav class="navbar navbar-dark bg-primary shadow-sm">
+        <div class="container-fluid container">
+            <h1 class="navbar-brand mb-0 h1 fs-3">📖 Banco de Livros Digitais</h1>
+            
+            <div>
+                <button class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#modalCadastro">
+                    <i class="bi bi-plus-circle-fill"></i> Cadastrar Livro
+                </button>
+                <button class="btn btn-outline-light" id="btnLogout">
+                    <i class="bi bi-box-arrow-right"></i> Sair
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="input-group mb-4 shadow-sm">
+            <input type="text" id="inputBusca" class="form-control form-control-lg" placeholder="Buscar por título, autor ou gênero...">
+            <button class="btn btn-primary" type="button" id="btnBusca">
+                <i class="bi bi-search"></i> Buscar
+            </button>
+        </div>
+        
+        <h2>Livros Disponíveis para Troca e Doação</h2>
+        
+        <div id="listaLivros" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 mt-3">
+            </div>
+    </div>
+    
+    <div class="modal fade" id="modalCadastro" tabindex="-1" aria-labelledby="modalCadastroLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title" id="modalCadastroLabel">Cadastrar Livro para Compartilhamento</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formCadastroLivro" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="titulo" class="form-label">Título</label>
+                            <input type="text" class="form-control" id="titulo" name="titulo" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="autor" class="form-label">Autor</label>
+                            <input type="text" class="form-control" id="autor" name="autor">
+                        </div>
+                        <div class="mb-3">
+                            <label for="genero" class="form-label">Gênero</label>
+                            <input type="text" class="form-control" id="genero" name="genero">
+                        </div>
+                        <div class="mb-3">
+                            <label for="descricao" class="form-label">Descrição Breve</label>
+                            <textarea class="form-control" id="descricao" name="descricao" rows="3"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email_contato" class="form-label">Seu E-mail para Contato</label>
+                            <input type="email" class="form-control" id="email_contato" name="email_contato" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="imagem" class="form-label">Foto da Capa (Capa do Livro)</label>
+                            <input type="file" class="form-control" id="imagem" name="imagem" accept="image/*" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Compartilhar Livro</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal fade" id="modalDetalhes" tabindex="-1" aria-labelledby="modalDetalhesLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-info text-white">
+                    <h5 class="modal-title" id="modalDetalhesLabel">Detalhes do Livro</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="detalhesContent">
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalEdicao" tabindex="-1" aria-labelledby="modalEdicaoLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-warning text-white">
+                    <h5 class="modal-title" id="modalEdicaoLabel">Editar Livro</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formEdicaoLivro" enctype="multipart/form-data">
+                        <input type="hidden" id="edit-id" name="id"> 
+                        
+                        <div class="mb-3">
+                            <label for="edit-titulo" class="form-label">Título</label>
+                            <input type="text" class="form-control" id="edit-titulo" name="titulo" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-autor" class="form-label">Autor</label>
+                            <input type="text" class="form-control" id="edit-autor" name="autor">
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-genero" class="form-label">Gênero</label>
+                            <input type="text" class="form-control" id="edit-genero" name="genero">
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-descricao" class="form-label">Descrição Breve</label>
+                            <textarea class="form-control" id="edit-descricao" name="descricao" rows="3"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-email_contato" class="form-label">Seu E-mail para Contato</label>
+                            <input type="email" class="form-control" id="edit-email_contato" name="email_contato" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-imagem" class="form-label">Trocar Foto da Capa (Opcional)</label>
+                            <input type="file" class="form-control" id="edit-imagem" name="imagem" accept="image/*">
+                            <small class="form-text text-muted">Deixe vazio para manter a imagem atual.</small>
+                        </div>
+                        <button type="submit" class="btn btn-warning w-100">Salvar Alterações</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-light text-center text-lg-start mt-auto">
+        <div class="container p-3">
+            <div class="text-center text-muted">
+                © <span id="currentYear">2025</span> Banco de Livros Digitais | Todos os direitos reservados.
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

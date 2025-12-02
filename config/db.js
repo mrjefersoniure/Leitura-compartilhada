@@ -1,12 +1,24 @@
-const Database = require('better-sqlite3');
+const sqlite3 = require('sqlite3').verbose();
+const db = new sqlite3.Database('./livros.db', (err) => {
+    if (err) {
+        console.error("Erro ao conectar ao banco:", err);
+    } else {
+        console.log("Banco SQLite conectado.");
+    }
+});
 
-// Abre (ou cria) o banco
-const db = new Database('./livros.db');
+// Criar tabelas
+db.serialize(() => {
+    db.run(`
+        CREATE TABLE IF NOT EXISTS usuarios (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT UNIQUE NOT NULL,
+            email TEXT UNIQUE NOT NULL,
+            password_hash TEXT NOT NULL
+        )
+    `);
 
-// Inicializa as tabelas
-function initializeTables() {
-    // Tabela de Livros
-    db.prepare(`
+    db.run(`
         CREATE TABLE IF NOT EXISTS livros (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             titulo TEXT NOT NULL,
@@ -17,22 +29,9 @@ function initializeTables() {
             path_imagem TEXT,
             email_criador TEXT
         )
-    `).run();
+    `);
 
-    // Tabela de Usuários
-    db.prepare(`
-        CREATE TABLE IF NOT EXISTS usuarios (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            username TEXT UNIQUE NOT NULL,
-            email TEXT UNIQUE NOT NULL,
-            password_hash TEXT NOT NULL
-        )
-    `).run();
-
-    console.log("Tabelas verificadas/criadas com sucesso.");
-}
-
-// Inicializa ao carregar
-initializeTables();
+    console.log("Tabelas verificadas/criadas.");
+});
 
 module.exports = db;

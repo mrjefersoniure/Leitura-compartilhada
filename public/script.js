@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     
     // URL LOCAL
-    const BACKEND_URL = "http://localhost:3000"; 
+    const BACKEND_URL = "https://leitura-compartilhada.onrender.com"; 
 
     // =================================================================
     // 🔑 1. VERIFICAÇÃO DE AUTENTICAÇÃO (PROTEÇÃO DE TELA)
